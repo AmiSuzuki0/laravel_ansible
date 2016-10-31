@@ -1,7 +1,9 @@
 # 環境
-PHP 5.6.20
-PostgreSQL 9.5
-laravel5
+・PHP 5.6.20
+
+・PostgreSQL 9.5
+
+・laravel5
 
 # 前提条件
 vagrantの実行環境が整っていること
