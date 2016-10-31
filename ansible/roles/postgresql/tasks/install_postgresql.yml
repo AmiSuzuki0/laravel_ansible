@@ -1,0 +1,13 @@
+- name: Add repository 'epel-repo'
+  yum: name=http://yum.postgresql.org/{{ pg_version1 }}/redhat/rhel-7-x86_64/pgdg-centos{{ pg_version2 }}-{{ pg_version1 }}-2.noarch.rpm
+
+- name: install ({{ pg_package_name }})
+  yum: name={{ item }} state=latest
+  with_items:
+    - "{{ pg_package_name }}-server"
+    - "{{ pg_package_name }}-devel"
+    - "{{ pg_package_name }}-contrib"
+    - "{{ pg_package_name }}-libs"
+    - "{{ pg_package_name }}-devel"
+    - python-psycopg2
+    - libselinux-python

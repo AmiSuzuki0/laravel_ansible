@@ -1,0 +1,5 @@
+---
+# postgresql
+pg_version1: "9.5" # ドット有り
+pg_version2: "95"  # ドット無し
+pg_package_name: "postgresql95"

@@ -1,0 +1,6 @@
+---
+- name: インストール 開発系ライブラリ
+  yum: name={{ item }} state=latest
+  with_items:
+    - "@base"
+    - "@development"

@@ -1,0 +1,6 @@
+---
+- name: 日本時間に変更
+  copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
+
+- name: 日本時間に変更
+  copy: src=clock dest=/etc/sysconfig/clock

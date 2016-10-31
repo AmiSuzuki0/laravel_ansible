@@ -1,0 +1,14 @@
+---
+- name: インストール phpPgAdmin
+  yum: name=phpPgAdmin state=present
+
+- name: Replace config.inc.php
+  copy: src=config.inc.php dest=/usr/share/phpPgAdmin/config.inc.php
+- name: phppgadmin.conf設置
+  template: src=phppgadmin.conf.j2 dest=/etc/nginx/conf.d/phppgadmin.conf
+- name: README 削除
+  file: path=/etc/httpd/conf.d/README state=absent
+
+- name: nginx再起動
+  service: name=nginx state=restarted
+  sudo: true

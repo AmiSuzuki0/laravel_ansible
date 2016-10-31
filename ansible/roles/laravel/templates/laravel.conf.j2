@@ -1,0 +1,16 @@
+server {
+    listen 80;
+    server_name  {{ hostname }};
+
+    location / {
+       root {{ document_root }}{{ laravel_app_name }}/public;
+       index index.php index.html index.htm;
+       try_files $uri $uri/ /index.php$query_string;
+     }
+     location ~ \.php$ {
+       fastcgi_pass  127.0.0.1:{{ nginx_port }};
+       fastcgi_index index.php;
+       fastcgi_param SCRIPT_FILENAME {{ document_root }}{{ laravel_app_name }}/public/$fastcgi_script_name;
+       include fastcgi_params;
+     }
+ }

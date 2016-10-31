@@ -1,0 +1,11 @@
+---
+- name: phppgadminが実行済みか確認
+  command: ls /vagrant/ansible/log/phppgadmin
+  register: phppgadmin_result
+  ignore_errors: true
+
+- include: install_phppgadmin.yml
+
+- name: phppgadmin実行済みファイル作成
+  file: path=/vagrant/ansible/log/phppgadmin state=touch
+  when: phppgadmin_result|failed

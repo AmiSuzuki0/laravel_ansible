@@ -1,0 +1,18 @@
+---
+- name : create database
+  postgresql_db:
+    name: "{{ pg_db_name }}"
+    encoding: "UTF-8"
+    login_user: postgres
+
+- name: create user
+  postgresql_user:
+    db: "{{ pg_db_name }}"
+    name: "{{ pg_db_user }}"
+    password: "{{ pg_db_pw }}"
+    priv: ALL
+    state: present
+    login_user: postgres
+  sudo_user: postgres
+  sudo: yes
+  notify: postgres再起動

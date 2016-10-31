@@ -1,0 +1,10 @@
+---
+- name: php-fpm起動
+  service: name=php-fpm state=started enabled=yes
+
+- name: php-fpm再起動
+  service: name=php-fpm state=restarted enabled=yes
+
+- name: nginx再起動
+  service: name=nginx state=restarted
+  sudo: true

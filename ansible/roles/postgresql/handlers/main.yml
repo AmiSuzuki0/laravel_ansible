@@ -1,0 +1,6 @@
+---
+- name: postgres起動
+  service: name="postgresql-{{ pg_version1 }}" state=started  enabled=yes
+
+- name: postgres再起動
+  service: name="postgresql-{{ pg_version1 }}" state=restarted enabled=yes

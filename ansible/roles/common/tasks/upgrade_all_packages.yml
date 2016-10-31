@@ -1,0 +1,4 @@
+---
+- name: システム更新
+  yum: name=* state=latest
+  ignore_errors: True

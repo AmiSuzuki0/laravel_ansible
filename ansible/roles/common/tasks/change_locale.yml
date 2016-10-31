@@ -1,0 +1,5 @@
+---
+- name: 日本語に変更
+  copy: src=i18n dest=/etc/sysconfig/i18n
+- name: 日本語環境反映
+  shell: source /etc/sysconfig/i18n

@@ -1,0 +1,15 @@
+---
+- name: PHP | Install Composer
+  shell: git clone https://github.com/ngyuki/phpenv-composer.git chdir=/usr/local/share/phpenv/plugins
+  sudo: true
+  ignore_errors: true
+
+- name: rehash
+  shell: /bin/zsh -lc "/usr/local/share/phpenv/bin/phpenv rehash"
+
+- name: composer rootで実行
+  shell: /bin/zsh -lc "/usr/local/share/phpenv/plugins/phpenv-composer/libexec/composer --version"
+  sudo: yes
+- name: composer vagrantで実行
+  shell: /bin/zsh -lc "/usr/local/share/phpenv/plugins/phpenv-composer/libexec/composer --version"
+  sudo: vagrant

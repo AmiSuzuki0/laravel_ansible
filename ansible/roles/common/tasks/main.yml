@@ -1,0 +1,34 @@
+---
+- name: commonが実行済みか確認
+  command: ls /vagrant/ansible/log/common
+  register: common_result
+  ignore_errors: true
+
+# selinuxを停止
+- include: disable_selinux.yml
+  when: common_result|failed
+# 日本語時間に変更
+- include: change_locale.yml
+  when: common_result|failed
+# タイムゾーン変更
+- include: change_timezone.yml
+  when: common_result|failed
+# システム更新
+- include: upgrade_all_packages.yml
+  when: common_result|failed
+# Devツールのインストール
+- include: install_devtools.yml
+  when: common_result|failed
+# NTPインストール
+- include: install_ntp.yml
+  when: common_result|failed
+# iptable停止
+- include: stop_iptables.yml
+  when: common_result|failed
+# 各種ツールインストール
+- include: install_tool.yml
+  when: common_result|failed
+
+- name: common実行済みファイル作成
+  file: path=/vagrant/ansible/log/common state=touch
+  when: common_result|failed

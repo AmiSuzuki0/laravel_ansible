@@ -1,0 +1,25 @@
+---
+- name: phpenvが実行済みか確認
+  command: ls /vagrant/ansible/log/phpenv
+  register: phpenv_result
+  ignore_errors: true
+
+# 必要なパッケージなどインストール
+- include: init.yml
+  when: phpenv_result|failed
+
+# phpenvインストール
+- include: install_phpenv.yml
+  when: phpenv_result|failed
+
+# phpインストール
+- include: install_php.yml
+  when: phpenv_result|failed
+
+# composerインストール
+- include: composer.yml
+  when: phpenv_result|failed
+
+- name: phpenv実行済みファイル作成
+  file: path=/vagrant/ansible/log/phpenv state=touch
+  when: phpenv_result|failed

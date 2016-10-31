@@ -1,0 +1,11 @@
+---
+- name: laravelが実行済みか確認
+  command: ls /vagrant/ansible/log/laravel
+  register: laravel_result
+  ignore_errors: true
+
+- include: install_laravel.yml
+
+- name: laravel実行済みファイル作成
+  file: path=/vagrant/ansible/log/laravel state=touch
+  when: laravel_result|failed

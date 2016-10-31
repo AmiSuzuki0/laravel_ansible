@@ -1,0 +1,32 @@
+- name: Download Laravel Installer(root)
+  shell: /bin/zsh -lc "composer global require laravel/installer=~1.1"
+  sudo: true
+- name: PHP | Download Laravel Installer(vagrant)
+  shell: /bin/zsh -lc "composer global require laravel/installer=~1.1"
+  sudo: vagrant
+
+- name: create app
+  shell: /bin/zsh -lc "composer create-project --prefer-dist laravel/laravel {{ laravel_app_name }}" chdir={{ document_root }}
+  sudo: vagrant
+
+- name: .envファイルのコピー
+  template: src=env.j2 dest={{ document_root }}{{ laravel_app_name }}/.env
+- name: app.phpファイルのコピー
+  copy: src=app.php dest={{ document_root }}{{ laravel_app_name }}/config/app.php
+  sudo: vagrant
+- name: gulpfile.jsファイルのコピー
+  template: src=gulpfile.js.j2 dest={{ document_root }}{{ laravel_app_name }}/gulpfile.js
+- name: composer.jsonファイルのコピー
+  copy: src=composer.json dest={{ document_root }}{{ laravel_app_name }}/composer.json
+
+- name: composer update
+  shell: /bin/zsh -lc "composer update" chdir={{ document_root }}{{ laravel_app_name }}
+  sudo: vagrant
+  ignore_errors: true
+
+- name: .env key generate
+  shell: /bin/zsh -lc "php artisan key:generate" chdir={{ document_root }}{{ laravel_app_name }}
+
+- name: nginx.conf設置
+  template: src=laravel.conf.j2 dest=/etc/nginx/conf.d/laravel.conf
+  notify: nginx再起動

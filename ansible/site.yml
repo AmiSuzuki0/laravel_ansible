@@ -1,0 +1,12 @@
+---
+- name: Vagrant環境構築
+  hosts: vagrant
+  sudo: yes
+  connection: local
+  roles:
+    - common
+    - nginx
+    - postgresql
+    - phpenv
+    - phppgadmin
+    - laravel

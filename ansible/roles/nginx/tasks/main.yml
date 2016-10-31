@@ -1,0 +1,13 @@
+---
+- name: nginxが実行済みか確認
+  command: ls /vagrant/ansible/log/nginx
+  register: nginx_result
+  ignore_errors: true
+
+# nginxインストール
+- include: install_nginx.yml
+  when: nginx_result|failed
+
+- name: nginx実行済みファイル作成
+  file: path=/vagrant/ansible/log/nginx state=touch
+  when: nginx_result|failed

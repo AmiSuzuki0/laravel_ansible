@@ -1,0 +1,9 @@
+---
+- name: ntp設定
+  yum: name=ntp state=present
+
+- name: 設定ファイル生成
+  copy: src=ntp.conf dest=/etc/ntp.conf
+
+- name: ntpd起動
+  service: name=ntpd state=started enabled=yes

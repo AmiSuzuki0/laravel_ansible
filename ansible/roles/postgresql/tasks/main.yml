@@ -1,0 +1,18 @@
+---
+- name: postgresqlが実行済みか確認
+  command: ls /vagrant/ansible/log/postgresql
+  register: postgresql_result
+  ignore_errors: true
+
+- include: install_postgresql.yml
+  when: postgresql_result|failed
+
+- include: init.yml
+  when: postgresql_result|failed
+
+- include: create.yml
+  when: postgresql_result|failed
+
+- name: postgresql実行済みファイル作成
+  file: path=/vagrant/ansible/log/postgresql state=touch
+  when: postgresql_result|failed

@@ -1,0 +1,17 @@
+---
+- name: php の build に必要なパッケージのインストール
+  yum: name={{ item }} state=present
+  with_items:
+    - libxml2-devel
+    - openssl-devel
+    - curl-devel
+    - libjpeg-devel
+    - libpng-devel
+    - libXpm-devel
+    - freetype-devel
+    - libmcrypt-devel
+    - readline-devel
+    - libtidy-devel
+    - libxslt-devel
+    - gcc
+    - cmake

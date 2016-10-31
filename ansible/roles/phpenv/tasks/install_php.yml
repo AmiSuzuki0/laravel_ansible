@@ -1,0 +1,25 @@
+---
+# PHPインストール
+- name: PHPをインストール
+  shell: /bin/zsh -lc "/usr/local/share/phpenv/bin/phpenv install {{ php_version }}"
+- name: PHPをglobalに設定
+  shell: /bin/zsh -lc "/usr/local/share/phpenv/bin/phpenv global {{ php_version }}"
+- name: rehash
+  shell: /bin/zsh -lc "/usr/local/share/phpenv/bin/phpenv rehash"
+
+# 設定ファイル転送
+- name: custom.iniの設置
+  copy: src=custom.ini dest=/usr/local/share/phpenv/versions/{{ php_version }}/etc/conf.d/custom.ini
+- name: xdebug.iniコピー
+  template: src=xdebug_custom.ini.j2 dest=/usr/local/share/phpenv/versions/{{ php_version }}/etc/conf.d/xdebug_custom.ini
+- name: php-fpm.confの設置
+  template: src=php-fpm.conf.j2 dest=/usr/local/share/phpenv/versions/{{ php_version }}/etc/php-fpm.conf
+
+# 起動など
+- name: php-fpm 起動スクリプトコピー
+  copy: src=/tmp/php-build/source/{{ php_version }}/sapi/fpm/init.d.php-fpm dest=/etc/init.d/php-fpm mode=0755
+  notify: php-fpm起動
+
+- name: Sessionフォルダのパーミッション変更
+  file: dest=/var/lib/php/session state=directory owner={{ nginx_user }} group={{ nginx_group }} mode=755
+  notify: nginx再起動

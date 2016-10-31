@@ -1,0 +1,20 @@
+---
+- name: ツールインストール
+  yum: name={{ item }} state=latest
+  with_items: tool_install_list
+
+- name: インストールZSH
+  yum: name=zsh state=present
+
+- name: oh-my-zshインストール
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest="/home/vagrant/.oh-my-zsh"
+
+- name: ZSHファイルのコピー(vagrant)
+  copy: src=.zshrc dest="/home/vagrant/.zshrc"
+- name: 設定ファイルの反映(vagrant)
+  shell: chsh -s /bin/zsh vagrant
+
+- name: ZSHファイルのコピー(root)
+  copy: src=.zshrc dest="/root/.zshrc"
+- name: 設定ファイルの反映(root)
+  shell: chsh -s /bin/zsh root

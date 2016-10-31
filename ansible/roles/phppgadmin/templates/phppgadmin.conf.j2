@@ -1,0 +1,17 @@
+server {
+    listen       8080;
+    server_name {{ hostname }};
+        location / {
+           root   /usr/share/phpPgAdmin;
+           index  index.php;
+         }
+        location  ~ .php$ {
+            fastcgi_pass 127.0.0.1:{{ nginx_port }};
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /usr/share/phpPgAdmin$fastcgi_script_name;
+
+            fastcgi_intercept_errors on;
+            include        fastcgi_params;
+            fastcgi_param PHP_VALUE  "display_errors=off";
+            }
+}

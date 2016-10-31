@@ -1,0 +1,32 @@
+---
+- name: CHH/phpenvのmasterをインストール
+  command: git clone -b master git://github.com/CHH/phpenv.git /root/tmp/phpenv/
+
+- name: PHPENV_ROOTを変更
+  shell: PHPENV_ROOT="/usr/local/share/phpenv"
+
+- name: php-install.shを実行
+  shell: sh /root/tmp/phpenv/bin/phpenv-install.sh
+
+- name: phpenv 移動
+  shell: cp -a /root/.phpenv /usr/local/share/phpenv
+
+- name: PATHを追加
+  copy: src=phpenv.sh dest=/etc/profile.d/phpenv.sh
+
+# ディレクトリ作成
+- name: pluginsディレクトリを作成
+  file: path=/usr/local/share/phpenv/plugins force=yes state=directory
+- name: shimsディレクトリを作成
+  file: path=/usr/local/share/phpenv/shims force=yes state=directory
+- name: versionsディレクトリを作成
+  file: path=/usr/local/share/phpenv/versions force=yes state=directory
+
+# プラグイン設定
+- name: php-buildをphpenv/pluginsとしてインストール
+  command: git clone git://github.com/CHH/php-build.git /usr/local/share/phpenv/plugins/php-build
+- name: パーミッション変更
+  command: chmod 777 -R /usr/local/share/phpenv
+
+- name: PHPコンパイル時のdefault_configure_optionsを設定
+  template: src=default_configure_options.j2 dest=/usr/local/share/phpenv/plugins/php-build/share/php-build/default_configure_options
