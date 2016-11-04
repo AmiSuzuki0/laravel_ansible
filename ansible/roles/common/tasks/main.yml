@@ -14,8 +14,8 @@
 - include: change_timezone.yml
   when: common_result|failed
 # システム更新
-- include: upgrade_all_packages.yml
-  when: common_result|failed
+#- include: upgrade_all_packages.yml
+#  when: common_result|failed
 # Devツールのインストール
 - include: install_devtools.yml
   when: common_result|failed
