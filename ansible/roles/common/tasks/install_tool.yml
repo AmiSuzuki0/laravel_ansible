@@ -1,7 +1,7 @@
 ---
 - name: ツールインストール
   yum: name={{ item }} state=latest
-  with_items: tool_install_list
+  with_items: {{ tool_install_list }}
 
 - name: インストールZSH
   yum: name=zsh state=present
