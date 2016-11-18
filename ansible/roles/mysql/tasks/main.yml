@@ -1,0 +1,19 @@
+# MySQL5.7の公式リポジトリをインストール
+- name: Install Official MySQL5.7 Repository
+  yum: name=http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+
+# MySQL5.7をインストール
+- name: Install MySQL57
+  yum : name={{ item }} enablerepo=mysql57-community state=latest
+  with_items:
+    - mysql-community-client
+    - mysql-community-common
+    - mysql-community-devel
+    - mysql-community-libs
+    - mysql-community-server
+
+- name: change my.cnf
+  template: src=my.cnf.j2 dest=/etc/my.cnf owner=root group=root mode=0644
+
+- name: Add mysqld to StartUps on boot And Be Running
+  service: enabled=yes name=mysqld state=running
