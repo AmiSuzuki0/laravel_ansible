@@ -1,0 +1,23 @@
+- name: install php7
+  yum : name={{item}} enablerepo=remi,remi-php70,epel state=present
+  with_items:
+    - php
+    - php-devel
+    - php-opcache
+    - php-mbstring
+    - php-mcrypt
+    - php-pdo
+    - php-gd
+    - php-mysqlnd
+    - php-pecl-xdebug
+    - php-fpm
+    - php-xml
+
+- name: change php.ini
+  template: src=php.ini.j2 dest=/etc/php.ini owner=root group=root mode=0644
+
+- name: change 10-opcache.ini
+  template: src=10-opcache.ini.j2 dest=/etc/php.d/10-opcache.ini owner=root group=root mode=0644
+
+- name: httpd restart
+  service: enabled=yes name=httpd state=restarted

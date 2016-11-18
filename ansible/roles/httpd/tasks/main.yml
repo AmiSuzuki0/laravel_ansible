@@ -1,0 +1,12 @@
+- name: Install httpd
+  yum: name={{ item }} state=latest
+  with_items:
+    - httpd
+    - httpd-devel
+    - mod_ssl
+
+- name: set VirtualHost conf
+  template: src=laravel_vh.conf.j2 dest=/etc/httpd/conf.d/laravel_vh.conf owner=root group=root mode=0644
+
+- name: Add httpd to StartUps on boot And Be Running
+  service: enabled=yes name=httpd state=started

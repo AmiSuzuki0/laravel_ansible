@@ -1,3 +1,0 @@
----
-- name: iptables停止
-  service: name=iptables state=stopped

@@ -1,11 +1,11 @@
----
-- name: laravelが実行済みか確認
-  command: ls /vagrant/ansible/log/laravel
-  register: laravel_result
+- name: create app
+  shell: /bin/zsh -lc "composer create-project --prefer-dist laravel/laravel {{ project_name }}" chdir={{ document_root }}
+  sudo: vagrant
+
+- name: composer update
+  shell: /bin/zsh -lc "composer update" chdir={{ document_root }}{{ project_name }}
+  sudo: vagrant
   ignore_errors: true
 
-- include: install_laravel.yml
-
-- name: laravel実行済みファイル作成
-  file: path=/vagrant/ansible/log/laravel state=touch
-  when: laravel_result|failed
+- name: .env key generate
+  shell: /bin/zsh -lc "php artisan key:generate" chdir={{ document_root }}{{ project_name }}

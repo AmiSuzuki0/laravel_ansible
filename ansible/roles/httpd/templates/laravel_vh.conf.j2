@@ -1,0 +1,8 @@
+NameVirtualhost *:80
+
+<VirtualHost *:80>
+    DocumentRoot "{{ document_root }}"
+    <Directory "{{ document_root}}">
+      Require all granted
+    </Directory>
+</VirtualHost>

@@ -1,3 +1,0 @@
----
-- name: nginx起動 nginxサービスに登録
-  service: name=nginx state=started enabled=yes

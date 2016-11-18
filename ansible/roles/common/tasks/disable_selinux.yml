@@ -1,7 +1,0 @@
----
-- name: インストール libselinux-python
-  yum: name=libselinux-python state=installed
-
-- name: SELinux停止
-  selinux: state=disabled
-  sudo: yes
