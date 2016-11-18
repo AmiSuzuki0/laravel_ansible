@@ -4,4 +4,8 @@
   sudo: yes
   connection: local
   roles:
+    - common
+    - httpd
+    - php
+    - composer
     - laravel
