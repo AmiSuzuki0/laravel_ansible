@@ -1,6 +1,7 @@
 - name: create app
   shell: /bin/zsh -lc "composer create-project --prefer-dist laravel/laravel {{ project_name }}" chdir={{ document_root }}
   sudo: vagrant
+  ignore_errors: true
 
 - name: composer update
   shell: /bin/zsh -lc "composer update" chdir={{ document_root }}{{ project_name }}
