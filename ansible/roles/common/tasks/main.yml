@@ -2,4 +2,5 @@
 - include: set-locale.yml
 - include: add-yum-repos.yml
 - include: selinux.yml
+- include: install_tool.yml
 - include: command.yml

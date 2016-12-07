@@ -1,0 +1,5 @@
+- name: tools-install-vim
+  yum: name=vim state=latest
+
+- name: tools-install-git
+  yum: name=git state=latest
